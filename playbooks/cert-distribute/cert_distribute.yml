@@ -12,7 +12,9 @@
         var: sp_server_date_time.stdout
 
     - name: Create a new self-signed certificate on the IBM Storage Protect server.
-      shell: "cd /opt/tivoli/tsm/client/ba/bin/;dsmadmc -id={{ lookup('ini', 'SP_SERVER_USERNAME', file='data.ini') }} -password={{ lookup('ini', 'SP_SERVER_PASSWORD', file='data.ini') }} \"create certificate \\\"{{ sp_server_date_time.stdout }}\\\"\""
+      command: 
+        chdir: /opt/tivoli/tsm/client/ba/bin/
+        cmd: "dsmadmc -id={{ lookup('ini', 'SP_SERVER_USERNAME', file='data.ini') }} -password={{ lookup('ini', 'SP_SERVER_PASSWORD', file='data.ini') }} \"create certificate \\\"{{ sp_server_date_time.stdout }}\\\"\""
       register: cert_info
 
     - name: Display the output from the server command.
